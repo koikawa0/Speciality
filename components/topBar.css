@@ -1,0 +1,240 @@
+.topBar {
+	border-bottom: 1px solid var(--fontC);
+	display: grid;
+	grid-template-columns: minmax(max-content, 1fr) minmax(0, min(36rem, 40vw)) minmax(max-content, 1fr);
+	align-items: center;
+	position: relative;
+	padding-bottom: 8px;
+}
+
+.left-group {
+	display: flex;
+	align-items: center;
+	justify-self: start;
+}
+
+.title {
+	margin-left: 2rem;
+	font-size: 13px;
+	align-items: center;
+	display: flex;
+	flex-shrink: 0;
+	box-sizing: border-box;
+	gap: 8px;
+	margin-right: 2rem;
+	user-select: none;
+	-webkit-user-select: none;
+	width: auto;
+}
+
+.title svg {
+	flex-shrink: 0;
+}
+
+.title h1 {
+	white-space: nowrap;
+	min-width: 0;
+	margin: 0;
+}
+
+.menu {
+	display: flex;
+	flex-grow: 1;
+	align-items: center;
+	min-width: 0;
+}
+
+.title svg {
+	width: 18px;
+	height: 18px;
+	display: block;
+}
+
+.menu .buttons {
+	padding-top: 0;
+	position: relative;
+	display: flex;
+	align-items: center;
+	flex-shrink: 0;
+}
+
+.menu .buttons::before {
+	content: "";
+	position: absolute;
+	left: 0;
+	top: 50%;
+	transform: translateY(-50%);
+	width: 2px;
+	height: 60%;
+	background-color: var(--secFontC);
+}
+
+.about {
+	justify-self: end;
+	display: flex;
+	margin-right: 3rem;
+	align-items: center;
+}
+
+.menu a {
+	-webkit-appearance: none;
+	appearance: none;
+	background: none;
+	background-color: transparent;
+	border: none;
+	border-radius: 6px;
+	color: var(--secFontC);
+	font-family: "Google Sans", sans-serif;
+	font-size: 16px;
+	cursor: pointer;
+	margin: 0 5px;
+	padding: 6px 12px;
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	text-decoration: none;
+	transition:
+		background-color 0.2s ease,
+		color 0.1s ease 0.05s;
+	user-select: none;
+}
+
+.menu a:hover {
+	background-color: var(--hoverC);
+	color: var(--fontC);
+}
+
+button {
+	-webkit-appearance: none;
+	appearance: none;
+	background: none;
+	background-color: transparent;
+	border: none;
+	border-radius: 6px;
+	color: var(--secFontC);
+	font-family: "Google Sans", sans-serif;
+	font-size: 16px;
+	cursor: pointer;
+	margin: 0 5px;
+	padding: 6px 12px;
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	transition:
+		background-color 0.2s ease,
+		color 0.1s ease 0.05s;
+	user-select: none;
+}
+
+.menu button:hover {
+	background-color: var(--hoverC);
+	color: var(--fontC);
+}
+
+.search {
+	justify-self: center;
+	display: flex;
+	justify-content: center;
+	min-width: 0;
+	width: 100%;
+}
+
+.search input[type="text"] {
+	width: 100%;
+	padding: 16px 96px;
+	box-sizing: border-box;
+	border-radius: 12px;
+	background-color: var(--searchC);
+	border: none;
+	text-align: center;
+	font-family: "Google Sans", sans-serif;
+	font-size: 16px;
+	transition:
+		background-color 0.2s ease,
+		border 1s ease;
+	caret-color: var(--fontC);
+	user-select: none;
+}
+
+.search input[type="text"]:hover {
+	background-color: var(--searchHoverC);
+}
+
+.search input[type="text"]:focus {
+	outline: none;
+	border: solid;
+	background-color: var(--searchHoverC);
+	border-color: var(--fontC);
+	border-width: 2px;
+	text-align: left;
+	color: var(--fontC);
+}
+
+.modal-overlay {
+	position: fixed;
+	inset: 0;
+	background: rgba(0, 0, 0, 0.5);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	z-index: 1000;
+}
+
+.modal-content {
+	background: var(--secBackC);
+	padding: 0.5rem 2rem 2rem 2rem;
+	border-radius: 8px;
+	border: 2px solid var(--secFontC);
+	max-width: 400px;
+	width: 90%;
+	position: relative;
+}
+
+.modal-close {
+	position: absolute;
+	top: 0.5rem;
+	right: 0.2rem;
+	background: none;
+	border: none;
+	font-size: 1.5rem;
+	cursor: pointer;
+}
+
+.modal-content p {
+	padding-bottom: 2px;
+}
+
+.modal-content a {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+	width: fit-content;
+	margin: 0px 0px;
+	padding: 0.75rem 1rem;
+	color: var(--fontC);
+	border: 0.5px solid var(--secFontC);
+}
+
+@media (max-width: 700px) {
+	.title {margin-left: 1rem;}
+	.about {margin-right: 1rem;}
+	.search {display: none;}
+}
+
+.search-trigger {
+	width: min(30rem, 100%);
+	padding: 14px 18px;
+	border-radius: 12px;
+	background-color: var(--searchC);
+	border: none;
+	color: var(--secFontC);
+	font-family: "Google Sans", sans-serif;
+	font-size: 16px;
+	cursor: pointer;
+	text-align: center;
+	transition: background-color 0.2s ease;
+}
+
+.search-trigger:hover {
+	background-color: var(--searchHoverC);
+}

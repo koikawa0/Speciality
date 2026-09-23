@@ -1,0 +1,140 @@
+* {
+	box-sizing: border-box;
+}
+
+.shelf {
+	padding: 20px;
+	overflow: visible;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	text-align: left;
+	max-width: 1290px;
+	margin: 0 auto;
+}
+
+.shelf-cards {
+	display: flex;
+	overflow-x: auto;
+	overflow-y: visible;
+	gap: 20px;
+	padding: 20px 10px;
+	width: 100%;
+	scrollbar-width: none;
+}
+
+.shelf-cards::-webkit-scrollbar {
+	display: none;
+}
+
+.shelf-title {
+	font-size: 24px;
+	user-select: none;
+}
+
+.shelf-top {
+	padding-left: 10px;
+	margin-bottom: 5px;
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	user-select: none;
+}
+
+.shelf-secondary {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+}
+
+.shelf-secondary button {
+	padding: 0 3px;
+}
+
+.shelf-top a {
+	display: block;
+	text-decoration: none;
+	color: inherit;
+}
+
+.nav-buttons {
+	display: flex;
+	margin-left: 10px;
+}
+
+p {
+	margin: 0px
+}
+
+.add-shelf-btn {
+	margin: 20px auto;
+	display: block;
+	padding: 12px 24px;
+	border-radius: 12px;
+	background-color: var(--secBackC);
+	border: 1px dashed var(--secFontC);
+	color: var(--secFontC);
+	cursor: pointer;
+	font-family: "Google Sans", sans-serif;
+}
+
+.add-shelf-btn:hover {
+	background-color: var(--hoverC);
+	color: var(--fontC);
+}
+
+.remove-shelf-btn {
+	background: none;
+	border: 1px solid var(--secFontC);
+	border-radius: 6px;
+	color: var(--secFontC);
+	padding: 4px 10px;
+	font-size: 13px;
+	cursor: pointer;
+	font-family: "Google Sans", sans-serif;
+}
+
+.remove-shelf-btn:hover {
+	background-color: var(--hoverC);
+	color: var(--fontC);
+	border-color: var(--fontC);
+}
+
+.card-skeleton {
+	width: 230px;
+	height: 290px;
+	border-radius: 16px;
+	background: linear-gradient(90deg, var(--secBackC) 25%, var(--hoverC) 50%, var(--secBackC) 75%);
+	background-size: 200% 100%;
+	animation: skeleton-pulse 1.4s ease-in-out infinite;
+	flex-shrink: 0;
+}
+
+@keyframes skeleton-pulse {
+	0% { background-position: 200% 0; }
+	100% { background-position: -200% 0; }
+}
+
+.shelf-message {
+	padding: 20px 10px;
+	color: var(--secFontC);
+	font-size: 14px;
+}
+
+.sortable-shelf-wrapper {
+	position: relative;
+}
+
+.drag-handle {
+	position: absolute;
+	top: 20px;
+	left: -10px;
+	cursor: grab;
+	color: var(--secFontC);
+	touch-action: none;
+}
+
+.drag-handle:active {
+	cursor: grabbing;
+}

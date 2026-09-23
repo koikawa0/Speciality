@@ -1,0 +1,139 @@
+.mainBar {
+	display: flex;
+	justify-content: center;
+	user-select: none;
+}
+
+.bar {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+	gap: 20px;
+	position: fixed;
+	bottom: 2%;
+	width: 70%;
+	min-width: 320px;
+	max-width: 900px;
+	padding: 15px;
+	border: 2px solid var(--secFontC);
+	border-radius: 12px;
+	background-color: var(--secBackC);
+}
+
+.track-info {
+	display: flex;
+	align-items: center;
+	align-self: flex-start;
+	height: fit-content;
+	min-width: 0;
+}
+
+.track-info img {
+	width: 72px;
+	height: 72px;
+	object-fit: cover;
+	border-radius: 4px;
+}
+
+.details {
+	padding-left: 20px;
+	min-width: 0;
+	overflow: hidden;
+}
+
+.track, .album, .artist {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.controls {
+	justify-self: center;
+}
+
+.progress-container {
+	display: flex;
+}
+
+.progress-bar {
+	align-self: center;
+	margin: 0 8px;
+	border-radius: 10px;
+	width: clamp(8em, 20vw, 17em);
+	height: 5px;
+	background-color:var(--secFontC);
+	position: relative;
+}
+
+.progress-fill {
+	background-color: var(--fontC);
+	border-radius: 10px;
+	height: 5px;
+	position: relative;
+}
+
+.buttons {
+	padding-top: 16px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 16px;
+}
+
+.volume-container {
+	margin-left: auto;
+	align-items: center;
+	display: flex;
+	min-width: 0;
+	
+}
+
+.volume-bar {
+	margin: 0 8px;
+	background-color: var(--secFontC);
+	width: clamp(4em, 8vw, 10em);
+	height: 5px;
+	border-radius: 10px;
+	cursor: pointer;
+	position: relative;
+	flex-shrink: 1;
+}
+
+.volume-fill {
+	background-color: var(--fontC);
+	border-radius: 10px;
+	height: 5px;
+	position: relative;
+}
+
+.thumb {
+	width: 12px;
+	height: 12px;
+	border-radius: 50%;
+	background-color: var(--color4);
+	position: absolute;
+	top: 50%;
+	right: 0;
+	transform: translate(50%, -50%);
+	opacity: 0;
+	transition: opacity 0.15s ease;
+}
+
+.progress-bar:hover .progress-fill,
+.volume-bar:hover .volume-fill
+{
+	background-color: var(--color4);
+	transition: background-color 0.15s ease;
+}
+
+.volume-bar:hover .thumb,
+.progress-bar:hover .thumb{
+	opacity: 1;
+}
+
+@media (max-width: 600px) {
+	.bar {grid-template-columns: 1fr;
+		width: 92%
+	}
+	.volume-container { display: none; }
+	.details { display: none; }
+}

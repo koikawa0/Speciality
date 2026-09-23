@@ -1,0 +1,9 @@
+1. Arrumar link do artista no NowPlayingBar
+
+2. Arrumar espaços da página da Library
+
+3. Fazer uma página do álbum
+
+4. Fazer o Shazam*
+
+5. Na Home, fazer Shelfs de Recomendado, Top Albuns, Top 100 Billboard, etc

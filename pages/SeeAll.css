@@ -1,0 +1,16 @@
+.see-all-page {
+	padding: 20px 40px;
+	max-width: 1290px;
+	margin: 0 auto;
+}
+
+.see-all-title {
+	font-size: 32px;
+	margin-bottom: 20px;
+}
+
+.see-all-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+	gap: 20px;
+}

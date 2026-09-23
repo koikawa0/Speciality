@@ -1,0 +1,23 @@
+@import url('https://fonts.googleapis.com/css2?family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&display=swap');
+
+:root {
+	--backC: #0A0908;
+	--secBackC: #161514;
+	--fontC: #F2F4F3;
+	--secFontC: #55524F;
+	--hoverC: #201F1E;
+	--searchC: #2D2C2A;
+	--searchHoverC: #3A3836;
+	
+	--color2: #22333B;
+	--color4: #A9927D;
+	--color5: #5E503F;
+	
+
+	background: var(--backC);
+	color: var(--fontC);
+	font-family: "Google Sans", sans-serif;
+}
+
+
+

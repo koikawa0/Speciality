@@ -1,0 +1,74 @@
+.card {
+	padding-top: 16px;
+	padding-bottom: 16px;
+	width: 230px;
+	height: 290px;
+	background-color: var(--secBackC);
+	border-radius: 16px;
+	transition: background-color 0.2s ease, transform 0.2s ease;
+	flex-shrink: none;
+}
+
+img {
+	height: 200px;
+	width: 200px;
+	border-radius: 32px;
+	user-select: none;
+}
+
+.card-content {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 6px;
+}
+
+.card-info p {
+	margin: 0px;
+	user-select: none;
+}
+
+.card-info {
+	width: 200px;
+	text-align: left;
+	
+}
+
+.card-title {
+	font-size: 18px;
+	display: -webkit-box;
+	-webkit-line-clamp: 1;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.card-artist {
+	font-size: 14px;
+}
+
+.card:hover {
+	background-color: var(--hoverC);
+	transform: scale(1.05);
+}
+
+.card a,
+a:has(.card) {
+	display: block;
+	text-decoration: none;
+	color: inherit;
+}
+
+.card-wrapper {
+	display: block;
+	cursor: pointer;
+}
+
+.card-artist-link {
+	text-decoration: none;
+	color: inherit;
+}
+
+.card-artist-link:hover .card-artist {
+	text-decoration: underline;
+}

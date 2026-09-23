@@ -1,0 +1,62 @@
+.artist-page {
+	padding: 20px 40px;
+	max-width: 1290px;
+	margin: 0 auto;
+}
+
+.artist-header {
+	display: flex;
+	align-items: center;
+	gap: 20px;
+	margin-bottom: 30px;
+}
+
+.artist-header img {
+	width: 150px;
+	height: 150px;
+	border-radius: 50%;
+	object-fit: cover;
+}
+
+.artist-section-title {
+	font-size: 22px;
+	margin: 20px 0 10px;
+}
+
+.artist-tracks-grid,
+.artist-albums-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+	gap: 20px;
+	margin-bottom: 30px;
+}
+
+.artist-album-card {
+	cursor: pointer;
+	border-radius: 12px;
+	overflow: hidden;
+	background-color: var(--secBackC);
+	transition: background-color 0.2s ease;
+}
+
+.artist-album-card:hover {
+	background-color: var(--hoverC);
+}
+
+.artist-album-card img {
+	width: 100%;
+	height: auto;
+	display: block;
+}
+
+.artist-album-card p {
+	padding: 10px;
+	margin: 0;
+	font-size: 14px;
+}
+
+.artist-message {
+	padding: 40px;
+	text-align: center;
+	color: var(--secFontC);
+}

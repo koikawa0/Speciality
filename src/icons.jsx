@@ -1,0 +1,17 @@
+export { default as StarBoldIcon } from "@iconify-react/solar/star-bold";
+export { default as InfoOutlineIcon } from "@iconify-react/material-symbols/info-outline";
+export { default as HomeOutlineIcon } from "@iconify-react/material-symbols/home-outline";
+export { default as LibraryLinearIcon } from "@iconify-react/solar/library-linear";
+export { default as CloseIcon } from "@iconify-react/material-symbols/close";
+export { default as GithubIcon } from "@iconify-react/mdi/github";
+export { default as ShuffleIcon } from "@iconify-react/mi/shuffle";
+export { default as PreviousIcon } from '@iconify-react/mi/previous';
+export { default as PlayIcon } from '@iconify-react/mi/play';
+export { default as PauseIcon } from '@iconify-react/mi/pause';
+export { default as NextIcon} from '@iconify-react/mi/next';
+export { default as RepeatIcon } from '@iconify-react/mi/repeat';
+export { default as VolumeUpRoundedIcon } from '@iconify-react/material-symbols/volume-up-rounded'; 
+export { default as VolumeOffRoundedIcon } from '@iconify-react/material-symbols/volume-off-rounded'; 
+export { default as VolumeDownRoundedIcon } from '@iconify-react/material-symbols/volume-down-rounded'; 
+export { default as MusicNoteIcon } from '@iconify-react/material-symbols/music-note';
+export { default as RepeatOneIcon } from '@iconify-react/material-symbols/repeat-one-rounded';
