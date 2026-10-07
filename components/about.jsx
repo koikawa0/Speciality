@@ -6,10 +6,12 @@ export default function Modal({ isOpen, onClose, title, children }) {
 	return (
 		<div className="modal-overlay" onClick={onClose}>
 			<div className="modal-content" onClick={(e) => e.stopPropagation()}>
-				<button className="modal-close" onClick={onClose}><CloseIcon height="1.5em"/></button>
+				<button className="modal-close" onClick={onClose}>
+					<CloseIcon height="1.5em" />
+				</button>
 				<h2>{title}</h2>
 				{children}
 			</div>
 		</div>
-	)
+	);
 }

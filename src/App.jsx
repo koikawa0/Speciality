@@ -8,6 +8,7 @@ import SeeAll from "../pages/SeeAll";
 import Library from "../pages/Library";
 import Error from "../pages/Error";
 import Artist from "../pages/Artist";
+import Album from "../pages/Album";
 
 const STORAGE_KEY = "customShelves";
 const QUEUE_KEY = "playerQueue";
@@ -160,6 +161,7 @@ function App() {
 					<Route path="/library" element={<Library />} />
 					<Route path="*" element={<Error />} />
 					<Route path="/artist/:id" element={<Artist />} />
+					<Route path="/album/:id" element={<Album />} />
 				</Route>
 			</Routes>
 		</BrowserRouter>

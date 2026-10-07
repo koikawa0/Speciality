@@ -138,3 +138,28 @@ p {
 .drag-handle:active {
 	cursor: grabbing;
 }
+
+.album-shelf-card {
+	width: 230px;
+	flex-shrink: 0;
+	text-decoration: none;
+	color: inherit;
+	display: block;
+}
+
+.album-shelf-card img {
+	width: 200px;
+	height: 200px;
+	border-radius: 16px;
+	object-fit: cover;
+}
+
+.album-shelf-title {
+	font-size: 16px;
+	margin: 8px 0 2px;
+}
+
+.album-shelf-artist {
+	font-size: 13px;
+	color: var(--secFontC);
+}

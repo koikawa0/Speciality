@@ -1,5 +1,5 @@
 import Card from "./card";
-import "./shelf.css"
+import "./shelf.css";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useRef, useState, useEffect } from "react";
@@ -15,14 +15,24 @@ export default function Shelf(props) {
 
 	useEffect(() => {
 		setStatus("loading");
-		const url = props.albumId
-			? `/deezer-api/album/${props.albumId}`
-			: `/deezer-api/search?q=${encodeURIComponent(props.query || "massive attack")}`;
+
+		let url;
+		if (props.endpoint) {
+			url = `/deezer-api/${props.endpoint}`;
+		} else if (props.playlistId) {
+			url = `/deezer-api/playlist/${props.playlistId}/tracks`;
+		} else if (props.albumId) {
+			url = `/deezer-api/album/${props.albumId}`;
+		} else {
+			url = `/deezer-api/search?q=${encodeURIComponent(props.query || "massive attack")}`;
+		}
 
 		fetch(url)
-			.then(r => r.json())
-			.then(data => {
-				const results = props.albumId ? (data.tracks?.data || []) : (data.data || []);
+			.then((r) => r.json())
+			.then((data) => {
+				const results = props.albumId
+					? data.tracks?.data || []
+					: data.data || [];
 				setTracks(results);
 				setStatus(results.length === 0 ? "empty" : "ready");
 			})
@@ -30,14 +40,14 @@ export default function Shelf(props) {
 				console.error(err);
 				setStatus("error");
 			});
-	}, [props.query, props.albumId]);
+	}, [props.query, props.albumId, props.endpoint, props.playlistId]);
 
-	const scroll = (direction => {
+	const scroll = (direction) => {
 		scrollRef.current.scrollBy({
 			left: direction === "left" ? -SCROLL_AMOUNT : SCROLL_AMOUNT,
 			behavior: "smooth",
 		});
-	});
+	};
 
 	const normalizedTracks = tracks
 		.filter((t) => t.artist && t.preview)
@@ -55,7 +65,9 @@ export default function Shelf(props) {
 		<div className="shelf">
 			<div className="shelf-top">
 				<div className="shelf-main">
-					<p className="shelf-title"><b>{props.title}</b></p>
+					<p className="shelf-title">
+						<b>{props.title}</b>
+					</p>
 				</div>
 				<div className="shelf-secondary">
 					<Link
@@ -65,15 +77,24 @@ export default function Shelf(props) {
 						See All
 					</Link>
 					<div className="nav-buttons">
-						<button className="nav-btn" onClick={() => scroll("left")}>
-							<ChevronLeft size={24}/>
+						<button
+							className="nav-btn"
+							onClick={() => scroll("left")}
+						>
+							<ChevronLeft size={24} />
 						</button>
-						<button className="nav-btn" onClick={() => scroll("right")}>
-							<ChevronRight size={24}/>
+						<button
+							className="nav-btn"
+							onClick={() => scroll("right")}
+						>
+							<ChevronRight size={24} />
 						</button>
 					</div>
 					{props.onRemove && (
-						<button className="remove-shelf-btn" onClick={props.onRemove}>
+						<button
+							className="remove-shelf-btn"
+							onClick={props.onRemove}
+						>
 							Remove
 						</button>
 					)}
@@ -93,12 +114,14 @@ export default function Shelf(props) {
 			)}
 
 			{status === "error" && (
-				<p className="shelf-message">Couldn't load this shelf. Try again later.</p>
+				<p className="shelf-message">
+					Couldn't load this shelf. Try again later.
+				</p>
 			)}
 
 			{status === "ready" && (
 				<div className="shelf-cards" ref={scrollRef}>
-					{normalizedTracks.map((track, index) =>
+					{normalizedTracks.map((track, index) => (
 						<Card
 							key={track.id}
 							title={track.title}
@@ -107,7 +130,7 @@ export default function Shelf(props) {
 							image={track.image}
 							onPlay={() => props.onPlay(normalizedTracks, index)}
 						/>
-					)}
+					))}
 				</div>
 			)}
 		</div>

@@ -9,7 +9,7 @@ import "./topBar.css";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import Modal from "./about.jsx";
-import SearchModal from "./search.jsx";
+import SearchModal from "./search-modal.jsx";
 
 export default function TopBar(props) {
 	const [showAbout, setShowAbout] = useState(false);

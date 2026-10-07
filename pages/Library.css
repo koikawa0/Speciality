@@ -1,0 +1,9 @@
+.library-page {
+	max-width: 1290px;
+	margin: 0 auto;
+	padding: 20px 40px;
+}
+
+.library-page h1 {
+	margin-bottom: 10px;
+}

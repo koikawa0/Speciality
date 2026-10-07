@@ -137,3 +137,12 @@
 	.volume-container { display: none; }
 	.details { display: none; }
 }
+
+.artist a {
+	color: inherit;
+	text-decoration: none;
+}
+
+.artist a:hover {
+	text-decoration: underline;
+}

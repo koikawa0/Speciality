@@ -51,19 +51,24 @@ export default function AddAlbumShelfModal({ isOpen, onClose, onAddShelf }) {
 			/>
 			<div className="search-modal-results">
 				{loading && <p>Searching...</p>}
-				{!loading && results.map((album) => (
-					<div
-						key={album.id}
-						className="search-result"
-						onClick={() => handleSelect(album)}
-					>
-						<img src={album.cover_small} alt={album.title} />
-						<div className="search-result-info">
-							<p className="search-result-title">{album.title}</p>
-							<p className="search-result-artist">{album.artist.name}</p>
+				{!loading &&
+					results.map((album) => (
+						<div
+							key={album.id}
+							className="search-result"
+							onClick={() => handleSelect(album)}
+						>
+							<img src={album.cover_small} alt={album.title} />
+							<div className="search-result-info">
+								<p className="search-result-title">
+									{album.title}
+								</p>
+								<p className="search-result-artist">
+									{album.artist.name}
+								</p>
+							</div>
 						</div>
-					</div>
-				))}
+					))}
 			</div>
 		</Modal>
 	);

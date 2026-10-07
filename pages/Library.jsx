@@ -12,6 +12,7 @@ import Shelf from "../components/shelf";
 import SortableShelf from "../components/sortable-shelf";
 import AddShelfModal from "../components/add-shelf-modal";
 import AddAlbumShelfModal from "../components/add-album-shelf-modal";
+import "./Library.css";
 
 export default function Library() {
 	const { onPlay, customShelves, onAddShelf, onRemoveShelf, onReorderShelves } = useOutletContext();
