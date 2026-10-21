@@ -88,15 +88,28 @@ export default function PlayingBar({
 		}
 	}, [onEnded])
 
-	function togglePlay() {
+	const togglePlay = useCallback(() => {
 		const audio = audioRef.current
-		if (!preview) return
+		if (!audio.src || !preview) return
 		if (audio.paused) {
 			audio.play().catch(() => {})
 		} else {
 			audio.pause()
 		}
-	}
+	}, [preview])
+
+	// Space bar toggles play/pause (ignored while typing or on a focused button/link)
+	useEffect(() => {
+		function onKey(e) {
+			if (e.code !== "Space") return
+			const tag = e.target.tagName
+			if (["INPUT", "TEXTAREA", "BUTTON", "A", "SELECT"].includes(tag) || e.target.isContentEditable) return
+			e.preventDefault()
+			togglePlay()
+		}
+		window.addEventListener("keydown", onKey)
+		return () => window.removeEventListener("keydown", onKey)
+	}, [togglePlay])
 
 	function toggleMute() {
 		const audio = audioRef.current
@@ -164,7 +177,7 @@ export default function PlayingBar({
 			<div className="bar">
 				<div className="track-info">
 					{image ? (
-						<img src={image} alt="Track Cover"/>
+						<img src={image} alt="Track cover"/>
 					) : (
 						<div className="no-track-icon">
 							<MusicNoteIcon height="72px"/>
@@ -194,32 +207,32 @@ export default function PlayingBar({
 					</div>
 					<div className="buttons">
 						{queueLength > 1 && (
-							<div className="shuffle" onClick={onToggleShuffle} style={{ cursor: "pointer", opacity: shuffle ? 1 : 0.5}}>
+							<button className="shuffle" onClick={onToggleShuffle} aria-label="Shuffle" aria-pressed={shuffle} style={{ opacity: shuffle ? 1 : 0.5 }}>
 								<ShuffleIcon height="2em"/>
-							</div>
+							</button>
 						)}
 						{queueLength > 1 && (
-							<div className="previous" onClick={onPrevious} style={{ cursor: "pointer" }}>
+							<button className="previous" onClick={onPrevious} aria-label="Previous">
 								<PreviousIcon height="2em"/>
-							</div>
+							</button>
 						)}
-						<div className="play" onClick={togglePlay} style={{ cursor: "pointer" }}>
+						<button className="play" onClick={togglePlay} aria-label={isPlaying ? "Pause" : "Play"}>
 							{isPlaying ? <PauseIcon height="2em"/> : <PlayIcon height="2em"/>}
-						</div>
+						</button>
 						{queueLength > 1 && (
-							<div className="next" onClick={onNext} style={{ cursor: "pointer" }}>
+							<button className="next" onClick={onNext} aria-label="Next">
 								<NextIcon height="2em"/>
-							</div>
+							</button>
 						)}
-						<div className="repeat" onClick={onToggleRepeat} style={{cursor: "pointer", opacity: repeatMode === "off" ? 0.5 : 1}}>
+						<button className="repeat" onClick={onToggleRepeat} aria-label={`Repeat: ${repeatMode}`} style={{ opacity: repeatMode === "off" ? 0.5 : 1 }}>
 							{repeatMode === "one" ? <RepeatOneIcon height="2em"/> : <RepeatIcon height="2em"/>}
-						</div>
+						</button>
 					</div>
 				</div>
 				<div className="volume-container">
-					<div className="mute-button" onClick={toggleMute} style={{ cursor: "pointer" }}>
+					<button className="mute-button" onClick={toggleMute} aria-label={muted ? "Unmute" : "Mute"}>
 						{muted ? <VolumeOffRoundedIcon height="1.7em"/> : <VolumeUpRoundedIcon height="1.7em"/>}
-					</div>
+					</button>
 					<div className="volume-bar" ref={volumeBarRef} onMouseDown={handleVolumeDrag}>
 						<div className="volume-fill" style={{ width: `${volume}%` }}>
 							<div className="thumb"/>

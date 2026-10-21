@@ -75,7 +75,10 @@ export default function Shelf(props) {
 	const seeAllParams = new URLSearchParams({ title: props.title });
 	if (props.endpoint) seeAllParams.set("endpoint", props.endpoint);
 	else if (props.playlistId) seeAllParams.set("playlistId", props.playlistId);
-	else seeAllParams.set("q", props.query || "");
+	else if (props.albumId) {
+		seeAllParams.set("albumId", props.albumId);
+		if (props.albumImage) seeAllParams.set("albumImage", props.albumImage);
+	} else seeAllParams.set("q", props.query || "");
 
 	return (
 		<div className="shelf">

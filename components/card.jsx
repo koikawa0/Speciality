@@ -7,12 +7,27 @@ export default function Card(props) {
 		props.onPlay?.();
 	}
 
+	function handleKeyDown(e) {
+		if (e.target !== e.currentTarget) return;
+		if (e.key === "Enter" || e.key === " ") {
+			e.preventDefault();
+			props.onPlay?.();
+		}
+	}
+
 	return (
-		<div className="card-wrapper" onClick={handleClick}>
+		<div
+			className="card-wrapper"
+			onClick={handleClick}
+			onKeyDown={handleKeyDown}
+			role="button"
+			tabIndex={0}
+			aria-label={`Play ${props.title}${props.artist ? ` by ${props.artist}` : ""}`}
+		>
 			<div className="card">
 				<div className="card-content">
 					<div className="card-image">
-						<img src={props.image} alt="Album Cover"/>
+						<img src={props.image} alt="" loading="lazy" />
 					</div>
 					<div className="card-info">
 						<p className="card-title"><b>{props.title}</b></p>

@@ -146,3 +146,21 @@
 .artist a:hover {
 	text-decoration: underline;
 }
+
+.shuffle, .previous, .play, .next, .repeat, .mute-button {
+	background: none;
+	border: none;
+	padding: 0;
+	margin: 0;
+	color: inherit;
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+}
+
+.shuffle:focus-visible, .previous:focus-visible, .play:focus-visible,
+.next:focus-visible, .repeat:focus-visible, .mute-button:focus-visible {
+	outline: 2px solid var(--secFontC);
+	outline-offset: 2px;
+	border-radius: 6px;
+}
