@@ -6,27 +6,30 @@ import "./Album.css";
 export default function Album() {
 	const { id } = useParams();
 	const { onPlay } = useOutletContext();
-	const [album, setAlbum] = useState(null);
-	const [status, setStatus] = useState("loading");
+	const [result, setResult] = useState({ id: null, album: null, failed: false });
 
 	useEffect(() => {
-		setStatus("loading");
+		let cancelled = false;
 		fetch(`/deezer-api/album/${id}`)
 			.then((r) => r.json())
 			.then((data) => {
-				setAlbum(data);
-				setStatus("ready");
+				if (!cancelled) setResult({ id, album: data, failed: false });
 			})
 			.catch((err) => {
 				console.error(err);
-				setStatus("error");
+				if (!cancelled) setResult({ id, album: null, failed: true });
 			});
+		return () => {
+			cancelled = true;
+		};
 	}, [id]);
 
-	if (status === "loading")
+	const album = result.album;
+
+	if (result.id !== id)
 		return <p className="album-message">Loading album...</p>;
-	if (status === "error" || !album)
-		<p className="album-message">Couldn''t load this album.</p>;
+	if (result.failed || !album)
+		return <p className="album-message">Couldn't load this album.</p>;
 
 	const rawTracks = album.tracks?.data || [];
 	const normalizedTracks = rawTracks

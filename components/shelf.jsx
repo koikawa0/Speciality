@@ -6,41 +6,52 @@ import { useRef, useState, useEffect } from "react";
 
 export default function Shelf(props) {
 	const scrollRef = useRef(null);
-	const [tracks, setTracks] = useState([]);
-	const [status, setStatus] = useState("loading"); // "loading" | "ready" | "empty" | "error"
+	const [result, setResult] = useState({ url: null, tracks: [], failed: false });
 
 	const CARD_WIDTH = 230;
 	const GAP = 20;
 	const SCROLL_AMOUNT = (CARD_WIDTH + GAP) * 5;
 
-	useEffect(() => {
-		setStatus("loading");
+	let url;
+	if (props.endpoint) {
+		url = `/deezer-api/${props.endpoint}`;
+	} else if (props.playlistId) {
+		url = `/deezer-api/playlist/${props.playlistId}/tracks`;
+	} else if (props.albumId) {
+		url = `/deezer-api/album/${props.albumId}`;
+	} else {
+		url = `/deezer-api/search?q=${encodeURIComponent(props.query || "massive attack")}`;
+	}
 
-		let url;
-		if (props.endpoint) {
-			url = `/deezer-api/${props.endpoint}`;
-		} else if (props.playlistId) {
-			url = `/deezer-api/playlist/${props.playlistId}/tracks`;
-		} else if (props.albumId) {
-			url = `/deezer-api/album/${props.albumId}`;
-		} else {
-			url = `/deezer-api/search?q=${encodeURIComponent(props.query || "massive attack")}`;
-		}
+	const isAlbum = Boolean(props.albumId);
+
+	useEffect(() => {
+		let cancelled = false;
 
 		fetch(url)
 			.then((r) => r.json())
 			.then((data) => {
-				const results = props.albumId
-					? data.tracks?.data || []
-					: data.data || [];
-				setTracks(results);
-				setStatus(results.length === 0 ? "empty" : "ready");
+				if (cancelled) return;
+				const tracks = isAlbum ? data.tracks?.data || [] : data.data || [];
+				setResult({ url, tracks, failed: false });
 			})
 			.catch((err) => {
 				console.error(err);
-				setStatus("error");
+				if (!cancelled) setResult({ url, tracks: [], failed: true });
 			});
-	}, [props.query, props.albumId, props.endpoint, props.playlistId]);
+
+		return () => {
+			cancelled = true;
+		};
+	}, [url, isAlbum]);
+
+	let status;
+	if (result.url !== url) status = "loading";
+	else if (result.failed) status = "error";
+	else if (result.tracks.length === 0) status = "empty";
+	else status = "ready";
+
+	const tracks = result.url === url ? result.tracks : [];
 
 	const scroll = (direction) => {
 		scrollRef.current.scrollBy({
@@ -61,6 +72,11 @@ export default function Shelf(props) {
 			duration: t.duration,
 		}));
 
+	const seeAllParams = new URLSearchParams({ title: props.title });
+	if (props.endpoint) seeAllParams.set("endpoint", props.endpoint);
+	else if (props.playlistId) seeAllParams.set("playlistId", props.playlistId);
+	else seeAllParams.set("q", props.query || "");
+
 	return (
 		<div className="shelf">
 			<div className="shelf-top">
@@ -71,7 +87,7 @@ export default function Shelf(props) {
 				</div>
 				<div className="shelf-secondary">
 					<Link
-						to={`/see-all?q=${encodeURIComponent(props.query || "")}&title=${encodeURIComponent(props.title)}`}
+						to={`/see-all?${seeAllParams.toString()}`}
 						className="see-all"
 					>
 						See All

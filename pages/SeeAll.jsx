@@ -6,18 +6,40 @@ import "./SeeAll.css";
 export default function SeeAll() {
 	const [searchParams] = useSearchParams()
 	const { onPlay } = useOutletContext()
-	const [tracks, setTracks] = useState([])
+	const [result, setResult] = useState({ url: null, tracks: [] })
 
 	const query = searchParams.get("q") || "";
+	const endpoint = searchParams.get("endpoint") || "";
+	const playlistId = searchParams.get("playlistId") || "";
 	const title = searchParams.get("title") || "Results";
 
+	let url = null;
+	if (endpoint) {
+		const separator = endpoint.includes("?") ? "&" : "?";
+		url = `/deezer-api/${endpoint}${endpoint.includes("limit=") ? "" : `${separator}limit=50`}`;
+	} else if (playlistId) {
+		url = `/deezer-api/playlist/${playlistId}/tracks?limit=50`;
+	} else if (query) {
+		url = `/deezer-api/search?q=${encodeURIComponent(query)}&limit=50`;
+	}
+
 	useEffect(() => {
-		if (!query) return;
-		fetch(`/deezer-api/search?q=${encodeURIComponent(query)}&limit=50`)
+		if (!url) return;
+		let cancelled = false;
+
+		fetch(url)
 			.then((r) => r.json())
-			.then((data) => setTracks(data.data || []))
+			.then((data) => {
+				if (!cancelled) setResult({ url, tracks: data.data || [] });
+			})
 			.catch(console.error);
-	}, [query]);
+
+		return () => {
+			cancelled = true;
+		};
+	}, [url]);
+
+	const tracks = result.url === url ? result.tracks : [];
 
 	const normalizedTracks = tracks
 		.filter((t) => t.album && t.artist && t.preview)

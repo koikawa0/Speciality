@@ -4,23 +4,30 @@ import "./shelf.css";
 
 export default function AlbumShelf({ title, endpoint, playlistId }) {
 	const scrollRef = useRef(null);
-	const [albums, setAlbums] = useState([]);
-	const [status, setStatus] = useState("loading");
+	const [result, setResult] = useState({ url: null, albums: [], failed: false });
+
+	const isPlaylist = Boolean(playlistId);
+	const url = isPlaylist
+		? `/deezer-api/playlist/${playlistId}/tracks?limit=200`
+		: `/deezer-api/${endpoint}`;
 
 	useEffect(() => {
-		setStatus("loading");
+		let cancelled = false;
 
-		if (playlistId) {
-			fetch(`/deezer-api/playlist/${playlistId}/tracks?limit=200`)
-				.then(r => r.json())
-				.then(data => {
-					const tracks = data.data || [];
+		fetch(url)
+			.then((r) => r.json())
+			.then((data) => {
+				if (cancelled) return;
+				const items = data.data || [];
+				let albums = items;
+
+				if (isPlaylist) {
 					const seen = new Set();
-					const uniqueAlbums = [];
-					for (const t of tracks) {
+					albums = [];
+					for (const t of items) {
 						if (t.album && !seen.has(t.album.id)) {
 							seen.add(t.album.id);
-							uniqueAlbums.push({
+							albums.push({
 								id: t.album.id,
 								title: t.album.title,
 								cover_medium: t.album.cover_medium,
@@ -28,21 +35,26 @@ export default function AlbumShelf({ title, endpoint, playlistId }) {
 							});
 						}
 					}
-					setAlbums(uniqueAlbums);
-					setStatus(uniqueAlbums.length === 0 ? "empty" : "ready");
-				})
-				.catch(() => setStatus("error"));
-		} else {
-			fetch(`/deezer-api/${endpoint}`)
-				.then(r => r.json())
-				.then(data => {
-					const results = data.data || [];
-					setAlbums(results);
-					setStatus(results.length === 0 ? "empty" : "ready");
-				})
-				.catch(() => setStatus("error"));
-		}
-	}, [endpoint, playlistId]);
+				}
+
+				setResult({ url, albums, failed: false });
+			})
+			.catch(() => {
+				if (!cancelled) setResult({ url, albums: [], failed: true });
+			});
+
+		return () => {
+			cancelled = true;
+		};
+	}, [url, isPlaylist]);
+
+	let status;
+	if (result.url !== url) status = "loading";
+	else if (result.failed) status = "error";
+	else if (result.albums.length === 0) status = "empty";
+	else status = "ready";
+
+	const albums = result.url === url ? result.albums : [];
 
 	const scroll = (direction) => {
 		scrollRef.current.scrollBy({

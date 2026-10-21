@@ -42,7 +42,7 @@ export default function PlayingBar({
 			isFirstLoad.current = false;
 			return;
 		}
-		audio.play().catch((err) => console.log("Playback interrupted:", err));
+		audio.play().catch(() => {});
 	}, [preview]);
 
 	useEffect(() => {
@@ -65,7 +65,7 @@ export default function PlayingBar({
 			const action = onEnded?.()
 			if (action === "replay") {
 				audio.currentTime = 0
-				audio.play().catch((err) => console.log("Replay interrupted:", err))
+				audio.play().catch(() => {})
 			}
 		}
 		function handlePlay() {
@@ -92,7 +92,7 @@ export default function PlayingBar({
 		const audio = audioRef.current
 		if (!preview) return
 		if (audio.paused) {
-			audio.play().catch((err) => console.log("Playback interrupted:", err))
+			audio.play().catch(() => {})
 		} else {
 			audio.pause()
 		}
