@@ -1,6 +1,7 @@
 {
   "rewrites": [
     { "source": "/deezer-api/:path*", "destination": "https://api.deezer.com/:path*" },
+    { "source": "/audd-api/recognize", "destination": "/api/audd" },
     { "source": "/(.*)", "destination": "/index.html" }
   ]
 }
