@@ -3,8 +3,10 @@
 A music player built with React and Vite, using Deezer's free API for music discovery
 and AudD for audio recognition.
 
+**Live demo:** https://speciality-one.vercel.app
+
 <img src="./docs/home.png" alt="Speciality home page" width="800">
-	
+
 ## Features
 
 - Search for songs, albums and artists in the Deezer library
@@ -20,6 +22,7 @@ and AudD for audio recognition.
 - dnd-kit (drag-and-drop reordering)
 - Deezer API
 - AudD API
+- Vercel (hosting and serverless functions)
 
 ## Requirements
 
@@ -74,11 +77,28 @@ npm run dev
 
 Open the local URL shown in your terminal.
 
+## Deploying your own copy
+
+The app is hosted on Vercel. Two files make it work there:
+
+- `vercel.json` forwards `/deezer-api/*` to Deezer, which avoids browser CORS
+  errors, and sends every other route to the React app.
+- `api/audd.js` is a serverless function that sends recorded audio to AudD
+  without exposing your token.
+
+To deploy:
+
+1. Import the repository on [vercel.com](https://vercel.com).
+2. In **Settings → Environment Variables**, add `AUDD_API_TOKEN` with your token.
+3. Redeploy so the variable takes effect.
+
 ## Notes and limitations
 
-- Designed to run locally. The Deezer proxy and the Listen feature only work
-  with `npm run dev`.
 - Playback is **30-second previews** only.
+- Locally, the Vite dev server proxies Deezer and AudD. On Vercel, `vercel.json`
+  and `api/audd.js` do the same job.
+- The Listen feature needs microphone access, which browsers only allow on
+  `localhost` or HTTPS.
 
 ## Disclaimer
 
